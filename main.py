@@ -1,27 +1,24 @@
+import re
 from docx import Document
-from docx.shared import Pt
-import os
 
-# Получаем путь к текущей директории
-current_dir = os.path.dirname(os.path.abspath(__file__))
+def replace_fields(doc, context):
+    for paragraph in doc.paragraphs:
+        for field in re.findall(r"{{(.*?)}}", paragraph.text):
+            if field in context:
+                paragraph.text = paragraph.text.replace("{{" + field + "}}", str(context[field]))
 
-# Load the Word document template
-doc = Document(os.path.join(current_dir, "шаблон.docx"))
+    for table in doc.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                for paragraph in cell.paragraphs:
+                    for field in re.findall(r"{{(.*?)}}", paragraph.text):
+                        if field in context:
+                            paragraph.text = paragraph.text.replace("{{" + field + "}}", str(context[field]))
 
-# Define the context data
-context = {'director': "И.И.Иванов"}
+doc = Document("шаблон.docx")
+context = {'director': "И.И.Иванов",
+           'view_practice_viewe':"учебная",
+           'place_practice_ name_place ': "Югорский Государственный Университет"}
 
-# Replace placeholders in the document with context data
-for paragraph in doc.paragraphs:
-    for run in paragraph.runs:
-        if '{director}' in run.text:
-            run.text = run.text.replace('{director}', context['director'])
-            run.font.size = Pt(12)  # Set font size if needed
-
-# Save the modified document in the same directory
-output_file = os.path.join(current_dir, "шаблончик.docx")
-try:
-    doc.save(output_file)
-    print(f"Файл успешно сохранен по пути: {output_file}")
-except Exception as e:
-    print("Ошибка при сохранении файла:", e)
+replace_fields(doc, context)
+doc.save("шаблон-final.docx")
