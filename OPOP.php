@@ -73,6 +73,17 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Форма руководителя практики</title>
+    <script>
+        function addRow() {
+            var table = document.getElementById("studentsTable");
+            var rowCount = table.rows.length;
+            var row = table.insertRow(rowCount);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            cell1.innerHTML = "<input type='text' name='student_name[]'>";
+            cell2.innerHTML = "<input type='text' name='student_group[]'>";
+        }
+    </script>
     <!-- Подключение стилей -->
     <style>
         body {
@@ -187,6 +198,7 @@ $conn->close();
         <input type="text" name="postt" ><br><br>
 
         <input type="submit" value="Отправить">
+        <a href="process_form.php" class="ml-2">Список студентов</a>
     </form>
 
 </body>
