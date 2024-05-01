@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма заполнения</title>
+    <title>Администратор</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -98,10 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $post = $_POST['post'];
 
     // Один запрос на добавление всех данных
-    $sql = "INSERT INTO institute (name) VALUES ('$name');
-            INSERT INTO direction (name) VALUES ('$direction');
+    $sql = "INSERT INTO institute (name, direction) VALUES ('$name', '$direction' );
+            INSERT INTO direction (name, groupe) VALUES ('$direction','$number');
             INSERT INTO groupe (number, class) VALUES ('$number', '$class');
-            INSERT INTO boss_practice_ugrasu (fio, post) VALUES ('$fio', '$post')";
+            INSERT INTO opop (fio, post, direction) VALUES ('$fio', '$post', '$direction')";
 
     if ($conn->multi_query($sql) === TRUE) {
         // После успешного добавления данных перенаправляем пользователя на другую страницу или на ту же страницу без параметров POST

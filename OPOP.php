@@ -42,16 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $post = $_POST['post'];
     $Fio = $_POST['Fio'];
     $postt = $_POST['postt'];
-    $boss_practice_ugrasu = $_POST['boss_practice_ugrasu'];
-    $boss_practice_company = $_POST['boss_practice_company'];
+    $zalypa = $_POST['zalypa'];
+    $bts = $_POST['bts'];
     $groupe = $_POST['groupe'];
 
     // Ваш SQL-запрос для вставки данных в базу данных
-    $sql = "INSERT INTO practice (years, srok, name_practice, namber_date_order, groupe) VALUES ('$year', '$srok', '$name', '$order_number', '$groupe');
-        INSERT INTO view_practice (viewe, name_practice) VALUES ('$view_practice','$name');
-        INSERT INTO type_practice (type, name_practice) VALUES ('$type_practice', '$name');
+    $sql = "INSERT INTO practice (years, srok, name_practice, namber_date_order, groupe, view_practice, type_practice) VALUES ('$year', '$srok', '$name', '$order_number', '$groupe','$view_practice','$type_practice');
+        -- INSERT INTO view_practice (viewe, name_practice) VALUES ('$view_practice','$name');
+        -- INSERT INTO type_practice (type, name_practice) VALUES ('$type_practice', '$name');
         INSERT INTO place_practice (address, name_place, name_practice) VALUES ('$address', '$name_place','$name');
         INSERT INTO boss_practice_ugrasu (fio, post, name_practice) VALUES ('$fio', '$post','$name');
+        INSERT INTO boss_practice_org_company (fio, post, name_practice) VALUES ('$zalypa', '$bts','$name');
         INSERT INTO boss_practice_company (fio, post, name_practice) VALUES ('$Fio', '$postt','$name');";
 
     if ($conn->multi_query($sql) === TRUE) {
@@ -72,7 +73,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма руководителя практики</title>
+    <title>opop</title>
     <script>
         function addRow() {
             var table = document.getElementById("studentsTable");
@@ -196,6 +197,13 @@ $conn->close();
 
         <label for="postt">Должность:</label>
         <input type="text" name="postt" ><br><br>
+
+        <h4>Руководитель практики от организации:</h4>
+        <!-- <label for="Fio">Руководитель практики от предприятия:</label> -->
+        <input type="text" name="zalypa" ><br><br>
+
+        <label for="bts">Должность:</label>
+        <input type="text" name="bts" ><br><br>
 
         <input type="submit" value="Отправить">
         <a href="process_form.php" class="ml-2">Список студентов</a>

@@ -58,6 +58,9 @@
     <label for="student_fio">ФИО:</label>
         <input type="text" id="student_fio" name="student_fio" required><br><br>
 
+        <label for="name_practice">Название практики:</label>
+        <input type="text" id="name_practice" name="name_practice" ><br><br>
+
         <label for="view">Вид договора:</label>
         <select id="view" name="view">
             <option value="Долгосрочный">Долгосрочный</option>
@@ -72,14 +75,14 @@
         </select>
         <br><br>
 
-        <h3>Производственные задачи:</h3>
+        <!-- <h3>Производственные задачи:</h3>
         <label for="name">Название:</label>
         <input type="text" id="name" name="name" ><br><br>
 
         <label for="datee">Дата:</label>
         <input type="text" id="datee" name="datee" ><br>
         <hr>
-        <br>
+        <br> -->
         <label for="text">Как студент справлялся с трудностями:</label>
         <input type="text" id="text" name="text" ><br><br>
 
@@ -91,6 +94,10 @@
 
         <label for="textte">Замечания:</label>
         <input type="text" id="textte" name="textte" ><br><br>
+
+        <label for="rate">Оценка:</label>
+        <input type="text" id="rate" name="rate" ><br><br>
+
 
         <input type="submit" value="Отправить">
     </form>
@@ -117,6 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $viewe = $_POST['viewe'];
     $student_fio = $_POST['student_fio'];
     $view = $_POST['view'];
+    $rate = $_POST['rate'];
+    $name_practice = $_POST['name_practice'];
 
     // Один запрос на добавление всех данных 
     $sql = "INSERT INTO tasks (student_fio, name_task, datee) VALUES ('$student_fio', '$name', '$datee' );
@@ -125,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             INSERT INTO quality (student_fio, text) VALUES ('$student_fio', '$textt');
             INSERT INTO hards (student_fio, text) VALUES ('$student_fio', '$text');
             INSERT INTO pay (student_fio, viewe) VALUES ('$student_fio', '$viewe');
-            INSERT INTO view_contract (student_fio, view) VALUES ('$student_fio', '$view')";
+            ";
 
     if ($conn->multi_query($sql) === TRUE) {
         // После успешного добавления данных перенаправляем пользователя на другую страницу или на ту же страницу без параметров POST
