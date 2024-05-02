@@ -1,3 +1,4 @@
+import mysql.connector
 import re
 from docx import Document
 
@@ -15,10 +16,22 @@ def replace_fields(doc, context):
                         if field in context:
                             paragraph.text = paragraph.text.replace("{{" + field + "}}", str(context[field]))
 
-doc = Document("шаблон.docx")
-context = {'director': "И.И.Иванов",
-           'view_practice_viewe':"учебная",
-           'place_practice_ name_place ': "Югорский Государственный Университет"}
+# Подключение к базе данных MySQL
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="",
+  database="word"
+)
 
+mycursor = mydb.cursor()
+
+# Выполнение запроса к базе данных
+mycursor.execute("SELECT view_practice, groupe,years,srok,name_practice,namber_date_order,type_practice FROM practice")
+result = mycursor.fetchone()
+context = {'view_practice_viewe': result[0],
+           'groupe_number': result[1]}
+
+doc = Document("шаблон.docx")
 replace_fields(doc, context)
 doc.save("шаблон-final.docx")
