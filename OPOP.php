@@ -175,14 +175,15 @@ $conn->close();
 
         <label for="view_practice">Вид практики:</label>
         <select name="view_practice">
-            <option value="стажировка">Стажировка</option>
-            <option value="обучение">Обучение</option>
+            <option value="стажировка">учебная</option>
+            <option value="обучение">производственная</option>
+            <option value="обучение">преддипломная</option>
         </select><br><br>
 
         <label for="type_practice">Тип практики:</label>
         <select name="type_practice">
-            <option value="стажировка">Стажировка</option>
-            <option value="обучение">Обучение</option>
+            <option value="стажировка">учебная</option>
+            <option value="обучение">производственная</option>
         </select><br><br>
 
         <h4>Место практики</h4>
