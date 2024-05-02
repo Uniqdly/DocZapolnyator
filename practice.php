@@ -54,11 +54,43 @@
 <body>
 <form method="post" action="хуита.php">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <h2>Форма заполнения</h2>
+<h2>Форма заполнения</h2>
+<form method="post" action="хуита.php">
+    <label for="group_number">Выберите группу:</label>
+    <select id="group_number" name="group_number">
+        <?php
+        // Подключение к базе данных
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $dbname = "word";
 
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        if ($conn->connect_error) {
+            die("Ошибка подключения: " . $conn->connect_error);
+        }
+
+        // Получение данных о группах из базы данных
+        $sql = "SELECT number FROM groupe";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Выводим каждую группу как вариант в выпадающем списке
+            while($row = $result->fetch_assoc()) {
+                echo '<option value="' . $row["number"] . '">' . $row["number"] . '</option>';
+            }
+        } else {
+            echo '<option value="">Нет доступных групп</option>';
+        }
+
+        $conn->close();
+        ?>
+    </select>
     <label for="student_fio">ФИО:</label>
         <input type="text" id="student_fio" name="student_fio" required><br><br>
 
+        
         <label for="name_practice">Название практики:</label>
         <input type="text" id="name_practice" name="name_practice" ><br><br>
 
@@ -116,6 +148,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    // Получение данных о группах из базы данных
+$sql = "SELECT number FROM groupe";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Выводим каждую группу как вариант в выпадающем списке
+    while($row = $result->fetch_assoc()) {
+        echo '<option value="' . $row["number"] . '">' . $row["number"] . '</option>';
+    }
+} else {
+    echo '<option value="">Нет доступных групп</option>';
+}
+
     $datee = $_POST['datee'];
     $name = $_POST['name'];
     $textte = $_POST['textte'];
@@ -127,6 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $view = $_POST['view'];
     $rate = $_POST['rate'];
     $name_practice = $_POST['name_practice'];
+    $group_number = $_POST['group_number'];
 
     // Один запрос на добавление всех данных 
     $sql = "INSERT INTO tasks (student_fio, name_task, datee) VALUES ('$student_fio', '$name', '$datee' );

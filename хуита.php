@@ -25,9 +25,10 @@
         $view = $_POST['view'];
         $rate = $_POST['rate'];
         $name_practice = $_POST['name_practice'];
+        $group_number = $_POST['group_number'];
 
         // SQL запрос для вставки данных в таблицу practice_student
-        $sql = "INSERT INTO practice_student (student_fio, viewe_contract, pay, hards, name_tasks, quality, size_work, comments, name_practice, rate) VALUES ('$student_fio', '$view', '$viewe', '$text', '$name', '$textt', '$texte', '$textte', '$name_practice', '$rate')";
+        $sql = "INSERT INTO practice_student (student_fio, viewe_contract, pay, hards, name_tasks, quality, size_work, comments, name_practice, rate, groupe) VALUES ('$student_fio', '$view', '$viewe', '$text', '$name', '$textt', '$texte', '$textte', '$name_practice', '$rate','$group_number')";
 
         // Отправка запроса к базе данных
         if ($conn->query($sql) === TRUE) {
