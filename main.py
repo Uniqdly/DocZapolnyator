@@ -25,18 +25,7 @@ mydb = mysql.connector.connect(
 )
 
 mycursor = mydb.cursor()
-
-# Выполнение запроса к базе данных
-mycursor.execute("SELECT view_practice, groupe,years,srok,name_practice FROM practice")
-result = mycursor.fetchone()
-context = {'view_practice_viewe': result[0],
-           'groupe_number': result[1],
-           'practice_years': result[2],
-           'practice_srok': result[3],
-           'practice_name_practice': result[4],}
 doc = Document("шаблон.docx")
-replace_fields(doc, context)
-
 
 # Получение данных из таблицы practice_student
 mycursor.execute("SELECT student_fio, hards, quality, size_work, comments, rate, groupe FROM practice_student")
@@ -105,4 +94,17 @@ for practice_result in practice_results:
 
         # Замена значений в документе doc
         replace_fields(doc, context)
+
+        # Выполнение запроса к базе данных
+        mycursor.execute("SELECT view_practice, groupe,years,srok,name_practice FROM practice")
+        result = mycursor.fetchone()
+        context = {'view_practice_viewe': result[0],
+                'groupe_number': result[1],
+                'practice_years': result[2],
+                'practice_srok': result[3],
+                'practice_name_practice': result[4],}
+        
+        replace_fields(doc, context)
+
+
 doc.save("шаблон-final.docx")
