@@ -52,6 +52,7 @@
     </style>
 </head>
 <body>
+<form method="post" action="хуита.php">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <h2>Форма заполнения</h2>
 
@@ -81,8 +82,8 @@
 
         <label for="datee">Дата:</label>
         <input type="text" id="datee" name="datee" ><br>
-        <hr>
-        <br> -->
+        <hr> -->
+        <br>
         <label for="text">Как студент справлялся с трудностями:</label>
         <input type="text" id="text" name="text" ><br><br>
 
@@ -136,15 +137,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             INSERT INTO pay (student_fio, viewe) VALUES ('$student_fio', '$viewe');
             ";
 
-    if ($conn->multi_query($sql) === TRUE) {
-        // После успешного добавления данных перенаправляем пользователя на другую страницу или на ту же страницу без параметров POST
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    } else {
-        echo "Ошибка при добавлении записи в базу данных: " . $conn->error;
-    }
+if ($conn->multi_query($sql) === TRUE) {
+    // После успешного добавления данных перенаправляем пользователя на другую страницу
+    header("Location: хуита.php");
+    exit();
+} else {
+    echo "Ошибка при добавлении записи в базу данных: " . $conn->error;
+}
 
-    $conn->close();
+$conn->close();
 }
 ?>
 
