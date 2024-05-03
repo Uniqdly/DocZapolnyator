@@ -54,6 +54,7 @@
 <body>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <h2>Форма заполнения</h2>
+
         <label for="name">Название института:</label>
         <input type="text" id="name" name="name" required><br><br>
 
@@ -65,6 +66,9 @@
 
         <label for="number">Группа:</label>
         <input type="text" id="number" name="number" required><br><br>
+
+        <label for="code">Код группы:</label>
+        <input type="text" name="code" ><br><br>
 
         <h3>Анкета руководителя образовательной программы:</h3>
         <label for="fio">ФИО:</label>
@@ -96,10 +100,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $class = $_POST['class'];
     $fio = $_POST['fio'];
     $post = $_POST['post'];
+    $code = $_POST['code'];
 
     // Один запрос на добавление всех данных
     $sql = "INSERT INTO institute (name, direction) VALUES ('$name', '$direction' );
-            INSERT INTO direction (name, groupe) VALUES ('$direction','$number');
+            INSERT INTO direction (name, groupe,code) VALUES ('$direction','$number', '$code');
             INSERT INTO groupe (number, class) VALUES ('$number', '$class');
             INSERT INTO opop (fio, post, direction) VALUES ('$fio', '$post', '$direction')";
 

@@ -45,9 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $zalypa = $_POST['zalypa'];
     $bts = $_POST['bts'];
     $groupe = $_POST['groupe'];
+    $code = $_POST['code'];
+    $order_date = $_POST['order_date'];
+    
 
     // Ваш SQL-запрос для вставки данных в базу данных
-    $sql = "INSERT INTO practice (years, srok, name_practice, namber_date_order, groupe, view_practice, type_practice) VALUES ('$year', '$srok', '$name', '$order_number', '$groupe','$view_practice','$type_practice');
+    $sql = "INSERT INTO practice (years, srok, name_practice, number_order, groupe, view_practice, type_practice,code_direction,order_date) VALUES ('$year', '$srok', '$name', '$order_number', '$groupe','$view_practice','$type_practice', '$code', '$order_date');
         -- INSERT INTO view_practice (viewe, name_practice) VALUES ('$view_practice','$name');
         -- INSERT INTO type_practice (type, name_practice) VALUES ('$type_practice', '$name');
         INSERT INTO place_practice (address, name_place, name_practice) VALUES ('$address', '$name_place','$name');
@@ -157,7 +160,9 @@ $conn->close();
             ?>
         </select><br><br>
 
-   
+        <label for="code">Код группы:</label>
+        <input type="text" name="code" ><br><br>
+
         <label for="year">Год:</label>
         <input type="number" name="year" ><br><br>
 
