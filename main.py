@@ -27,11 +27,14 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 doc = Document("шаблон.docx")
 
-# Получение данных из таблицы practice_student
-mycursor.execute("SELECT student_fio, hards, quality, size_work, comments, rate, groupe FROM practice_student")
+mycursor.execute("SELECT fio  FROM orderok")
 results = mycursor.fetchall()  # Получить все строки результата
 for result in results:
-    context = {
+# Получение данных из таблицы practice_student
+    mycursor.execute("SELECT student_fio, hards, quality, size_work, comments, rate, groupe FROM practice_student WHERE student_fio = %s",(result[0],))
+    results = mycursor.fetchall()  # Получить все строки результата
+    for result in results:
+        context = {
         'student_fio': result[0],
         'practice_student_hards': result[1],
         'practice_student_quality': result[2],
@@ -39,7 +42,7 @@ for result in results:
         'comments_text': result[4],
         'practice_student_rate': result[5],
         'groupe_number': result[6]
-    }
+                    }
 
     # Замена значений в документе doc
     replace_fields(doc, context)
