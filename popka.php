@@ -160,7 +160,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 }
             }
-            
+
+            $sql_ugra = "SELECT fio,post FROM boss_practice_ugrasu WHERE name_practice = '$name_practice'";
+            $result_ugra = $conn->query($sql_ugra); 
+            if ($result_ugra->num_rows > 0) {
+                // Массив для хранения данных
+                $data_ugra = [];
+    
+                // Получаем данные и добавляем их в массив
+                while ($row_ugra = $result_ugra->fetch_assoc()) {
+                    $data_ugra[] = $row_ugra;
+                }
+    
+                // Переносим данные в таблицу end
+                foreach($data_ugra as $row_ugra) {
+                    $Ugra_boss_fio = $row_ugra['fio'];
+                    $Ugra_boss_post = $row_ugra['post'];
+                    
+    
+                    $sql_insert_endddddd = "UPDATE end SET Ugra_boss_fio='$Ugra_boss_fio', Ugra_boss_post='$Ugra_boss_post' WHERE student_fio='$fio'";
+                    if ($conn->query($sql_insert_endddddd) === TRUE) {
+                        echo "Данные успешно добавлены в БД";
+                    } else {
+                        echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
+                    }
+                }
+            }
+            $sql_company = "SELECT fio,post FROM boss_practice_ugrasu WHERE name_practice = '$name_practice'";
+            $result_company = $conn->query($sql_company); 
+            if ($result_company->num_rows > 0) {
+                // Массив для хранения данных
+                $data_company = [];
+    
+                // Получаем данные и добавляем их в массив
+                while ($row_company = $result_company->fetch_assoc()) {
+                    $data_company[] = $row_company;
+                }
+    
+                // Переносим данные в таблицу end
+                foreach($data_company as $row_company) {
+                    $company_boss_fio = $row_company['fio'];
+                    $company_boss_post = $row_company['post'];
+                    
+    
+                    $sql_insert_endddddd = "UPDATE end SET company_boss_fio='$company_boss_fio', company_boss_post='$company_boss_post' WHERE student_fio='$fio'";
+                    if ($conn->query($sql_insert_endddddd) === TRUE) {
+                        echo "Данные успешно добавлены в БД";
+                    } else {
+                        echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
+                    }
+                }
+            }
+          
         } 
     }
 }
