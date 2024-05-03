@@ -28,7 +28,7 @@ mycursor = mydb.cursor()
 doc = Document("шаблон.docx")
 
 # Выполнение запроса к базе данных
-mycursor.execute("SELECT student_fio,hards, quality, size_work, comments, rate, groupe, years, srok, view_practice, direction, address, name_place, name, class, name_practice FROM end")
+mycursor.execute("SELECT student_fio,hards, quality, size_work, comments, rate, groupe, years, srok, view_practice, direction, address, name_place, name, class, name_practice,Ugra_boss_fio,Ugra_boss_post,company_boss_fio,company_boss_post FROM end")
 result = mycursor.fetchone()
 context = {
             'student_fio': result[0],
@@ -46,7 +46,13 @@ context = {
             'place_practice_name_place': result[12],
             'institute_name': result[13],
             'groupe_class': result[14],
-            'name_practice': result[15]
+            'name_practice': result[15],
+            'boss_practice_ugrasu_fio':result[16],
+            'boss_practice_ugrasu_post':result[17],
+            'boss_practice_company_fio':result[18],
+            'boss_practice_company_post':result[19],
+            'boss_practice_org_company_fio':result[18],
+            'boss_practice_org_company_post':result[19]
         }
         
 replace_fields(doc, context)
