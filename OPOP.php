@@ -55,9 +55,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         -- INSERT INTO type_practice (type, name_practice) VALUES ('$type_practice', '$name');
         INSERT INTO place_practice (address, name_place, name_practice) VALUES ('$address', '$name_place','$name');
         INSERT INTO boss_huisos (fio, post, name_practice, org) VALUES ('$fio', '$post','$name', '$zalypa' );
-        -- INSERT INTO boss_practice_ugrasu (fio, post, name_practice) VALUES ('$fio', '$post','$name');
+        INSERT INTO boss_practice_ugrasu (fio, post, name_practice) VALUES ('$fio', '$post','$name');
         -- INSERT INTO boss_practice_org_company (fio, post, name_practice) VALUES ('$zalypa', '$bts','$name');
-        -- INSERT INTO boss_practice_company (fio, post, name_practice) VALUES ('$Fio', '$postt','$name');
+        INSERT INTO boss_practice_company (fio, post, name_practice) VALUES ('$Fio', '$postt','$name');
         ";
 
     if ($conn->multi_query($sql) === TRUE) {
@@ -188,7 +188,7 @@ $conn->close();
         <label for="type_practice">Тип практики:</label>
         <select name="type_practice">
             <option value="стажировка">учебная</option>
-            <option value="обучение">производственная</option>
+            <option value="обучение">ознакомительная</option>
         </select><br><br>
 
         <h4>Место практики</h4>
@@ -199,39 +199,39 @@ $conn->close();
         <input type="text" name="name_place" ><br><br>
         <hr>
 
-        <h4>Руководитель практики ЮГУ:</h4>
+        <!-- <h4>Руководитель практики ЮГУ:</h4> -->
         <!-- <label for="fio">Руководитель практики ЮГУ:</label> -->
-        <input type="text" name="fio" ><br><br>
+        <!-- <input type="text" name="fio" ><br><br>
 
         
         <label for="post">Должность:</label>
         <input type="text" name="post" ><br>
 
-        <form action="handler.php">
+        <form action="handler.php"> -->
         <!-- <p><b>Руководитель практики:</b></p> -->
-            <p><input name="zalypa" type="radio" value="От ЮГУ" value> От ЮГУ</p>
+            <!-- <p><input name="zalypa" type="radio" value="От ЮГУ" value> От ЮГУ</p>
             <p><input name="zalypa" type="radio" value="От организации" value> От организации</p>
             <p><input name="zalypa" type="radio" value="От предприятия" value> От предприятия</p><br>
             <input type="submit" value="Отправить">
-        <a href="process_form.php" class="ml-2">Список студентов</a>
-        
-        
-        <!-- <h4>Руководитель практики от предприятия:</h4> -->
-        <!-- <label for="Fio">Руководитель практики от предприятия:</label> -->
-        <!-- <input type="text" name="Fio" ><br><br> -->
-
-        <!-- <label for="postt">Должность:</label> -->
-        <!-- <input type="text" name="postt" ><br><br> -->
-
-        <!-- <h4>Руководитель практики от организации:</h4> -->
-        <!-- <label for="Fio">Руководитель практики от предприятия:</label> -->
-        <!-- <input type="text" name="zalypa" ><br><br> -->
-
-        <!-- <label for="bts">Должность:</label> -->
-        <!-- <input type="text" name="bts" ><br><br> -->
-
-        <!-- <input type="submit" value="Отправить">
         <a href="process_form.php" class="ml-2">Список студентов</a> -->
+        
+        
+        <h4>Руководитель практики от предприятия:</h4> 
+         <input type="text" name="Fio" ><br><br> 
+
+        <label for="postt">Должность:</label>
+        <input type="text" name="postt" ><br><br>
+
+        <hr>
+
+        <h4>Руководитель практики от ЮГУ:</h4>
+        <input type="text" name="fio" ><br><br>
+
+        <label for="post">Должность:</label>
+        <input type="text" name="post" ><br><br>
+
+        <input type="submit" value="Отправить">
+        <a href="process_form.php" class="ml-2">Список студентов</a>
     </form>
 
 </body>
