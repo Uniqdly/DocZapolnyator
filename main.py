@@ -50,7 +50,7 @@ context = {
             'place_practice_name_place': result[12],
             'institute_name': result[13],
             'groupe_class': result[14],
-            'name_practice': result[15],
+            'practice_name_practice': result[15],
             'boss_practice_ugrasu_fio': result[16],
             'boss_practice_ugrasu_post': result[17],
             'boss_practice_company_fio': result[18],

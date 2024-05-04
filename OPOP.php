@@ -11,21 +11,18 @@ if ($conn->connect_error) {
     die("Ошибка подключения: " . $conn->connect_error);
 }
 
-// Запрос к базе данных для получения списка групп
+// Получение данных о студентах из базы данных
 $sql = "SELECT number FROM groupe";
 $result = $conn->query($sql);
 
-// Проверяем, есть ли результаты
+// Получаем данные о группах и сохраняем их в массиве
+$groups = array();
 if ($result->num_rows > 0) {
-    // Создаем массив для хранения групп
-    $groups = array();
-    // Заполняем массив данными из запроса
     while($row = $result->fetch_assoc()) {
-        $groups[] = $row["number"];
+        $groups[] = $row;
     }
-} else {
-    echo "0 результатов";
 }
+$unique_groups = array_unique(array_column($groups, 'number'));
 
 // Проверяем, была ли отправлена форма
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -149,15 +146,17 @@ $conn->close();
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
     <h2>Форма для опоп </h2>
-        <label for="groupe">Группа:</label>
-        <select name="groupe" id="groupe" >
-            <option value="">Выберите группу</option>
+        
             <?php
-            // Выводим список групп в элементах списка
-            foreach ($groups as $groupe) {
-                echo "<option value='$groupe'>$groupe</option>";
-            }
-            ?>
+    // Выводим выпадающий список для выбора группы
+    echo '<label for="number">Выберите группу:</label><br>';
+    echo '<select id="number" name="number">';
+    foreach ($unique_groups as $groups) {
+        echo '<option value="' . $groups . '">' . $groups . '</option>';
+    }
+    
+    echo '</select>';
+    ?>
         </select><br><br>
 
         <label for="code">Код группы:</label>
@@ -180,15 +179,15 @@ $conn->close();
 
         <label for="view_practice">Вид практики:</label>
         <select name="view_practice">
-            <option value="стажировка">учебная</option>
-            <option value="обучение">производственная</option>
-            <option value="обучение">преддипломная</option>
+            <option value="учебная">учебная</option>
+            <option value="производственная">производственная</option>
+            <option value="преддипломная">преддипломная</option>
         </select><br><br>
 
         <label for="type_practice">Тип практики:</label>
         <select name="type_practice">
-            <option value="стажировка">учебная</option>
-            <option value="обучение">ознакомительная</option>
+            <option value="учебная">учебная</option>
+            <option value="ознакомительная">ознакомительная</option>
         </select><br><br>
 
         <h4>Место практики</h4>

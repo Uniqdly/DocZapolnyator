@@ -70,7 +70,7 @@ for result in results:
         'place_practice_name_place': result[6],
         'institute_name': result[7],
         'groupe_class': result[8],
-        'name_practice': result[9],
+        'practice_name_practice': result[9],
         'type_practice': result[10],
         'number_order': result[11],
         'order_date': result[12],
@@ -102,7 +102,7 @@ fio_results = mycursor.fetchall()
     
 for i, fio_result in enumerate(fio_results, start=1):
     context[f'fio_{i}'] = fio_result[0]
-    
+
 replace_fields(doc, context)
 mydb.close()
 # Закрываем курсор
