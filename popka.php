@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
                     $sql_insert_end = "INSERT INTO end (student_fio, viewe_contract, pay, hards, name_tasks, quality, size_work, comments, name_practice, rate, groupe) VALUES ('$student_fio', '$viewe_contract', '$pay', '$hards', '$name_tasks', '$quality', '$size_work','$comments','$name_practice','$rate','$groupe')";
                     if ($conn->query($sql_insert_end) === TRUE) {
-                        echo "Данные успешно добавлены в БД";
+                        echo " ";
                     } else {
                         echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                     }
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_endd = "UPDATE end SET years='$years', srok='$srok', number_order='$number_order', view_practice='$view_practice', type_practice='$type_practice', code_direction='$code_direction', order_date='$order_date' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_endd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_enddd = "UPDATE end SET address='$address', name_place='$name_place' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_enddd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_endddd = "UPDATE end SET name='$name' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_endddd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_enddddd = "UPDATE end SET class='$class' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_enddddd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -214,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_endddddd = "UPDATE end SET Ugra_boss_fio='$Ugra_boss_fio', Ugra_boss_post='$Ugra_boss_post' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_endddddd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
                         $sql_insert_endddddd = "UPDATE end SET company_boss_fio='$company_boss_fio', company_boss_post='$company_boss_post' WHERE student_fio='$fio'";
                         if ($conn->query($sql_insert_endddddd) === TRUE) {
-                            echo "Данные успешно добавлены в БД";
+                            echo " ";
                         } else {
                             echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                         }
@@ -247,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
               
             } 
-            echo "Данные успешно добавлены в БД";
+            echo " ";
         } else {
             // Данные уже существуют, нужно их обновить
 
