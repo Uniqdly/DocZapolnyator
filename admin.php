@@ -53,7 +53,7 @@
 </head>
 <body>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <h2>Форма заполнения</h2>
+    <h2>Форма заполнения для администратора</h2>
 
         <label for="name">Название института:</label>
         <input type="text" id="name" name="name" required><br><br>

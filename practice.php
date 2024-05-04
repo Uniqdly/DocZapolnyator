@@ -54,7 +54,7 @@
 <body>
 <form method="post" action="хуита.php">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-<h2>Форма заполнения</h2>
+<h2>Руководитель практики</h2>
 <form method="post" action="хуита.php">
     <label for="group_number">Выберите группу:</label>
     <select id="group_number" name="group_number">

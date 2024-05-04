@@ -148,7 +148,7 @@ $conn->close();
 <body>
 
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <h2>Форма руководителя практики</h2>
+    <h2>Форма для опоп </h2>
         <label for="groupe">Группа:</label>
         <select name="groupe" id="groupe" >
             <option value="">Выберите группу</option>

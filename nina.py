@@ -28,65 +28,58 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 doc = Document("1121.docx")
 
-mycursor.execute("SELECT * FROM student")  # Замените на ваш запрос получения студентов
-students = mycursor.fetchall()
 
-for student in students:
-    context = {
-        'fio': student[0],  # Предполагается, что имя студента находится в первом столбце
-        'id': student[1]    # Предполагается, что ID студента находится во втором столбце
-    }
-    replace_fields(doc, context)
-    doc.save(f"{student[1]}_final.docx")  # Сохраняем каждый документ с уникальным именем
+# mycursor.execute("SELECT fio, id FROM student")  # Измените запрос на ваш запрос получения студентов
+# students = mycursor.fetchall()
+
+# # Создаем пустой список для данных каждой строки таблицы
+# table_data = []
+
+# for student in students:
+#     context = {
+#         'fio': student[0],  # Предполагается, что имя студента находится в первом столбце
+#         'id': student[1]    # Предполагается, что ID студента находится во втором столбце
+#     }
+#     table_data.append(context)  # Добавляем данные каждого студента в список для таблицы
+
+# # Заполняем таблицу в документе
+# table = doc.tables[0]  # Предполагается, что таблица находится на первой странице документа
+
+# for row_data in table_data:
+#     row = table.add_row().cells
+#     replace_fields(doc, row_data)
+#     for cell in row:
+#         for paragraph in cell.paragraphs:
+#             replace_fields(doc, row_data)
+
 
 # mydb.close()
 
 
 # Выполнение запроса к базе данных
-mycursor.execute("SELECT view_practice, groupe, years, srok, type_practice,number_order,order_date,code_direction, direction FROM practice")
+mycursor.execute("SELECT student_fio, groupe, years, srok, view_practice, direction, name_place, name, class, name_practice, type_practice, number_order, order_date, code_direction FROM end")
 results = mycursor.fetchall()
 for result in results: 
     context = {
-    'view_practice_viewe': result[0],
-    'groupe_number': result[1],
-    'practice_years': result[2],
-    'practice_srok': result[3],
-    'type_practice': result[4],
-    'number_order': result[5],
-    'order_date': result[6],
-    'code_direction': result[7],
-    'direction_name': result[8]
-}
+        'student_fio': result[0],
+        'groupe_number': result[1],
+        'practice_years': result[2],
+        'practice_srok': result[3],
+        'view_practice_viewe': result[4],
+        'direction_name': result[5],
+        'place_practice_name_place': result[6],
+        'institute_name': result[7],
+        'groupe_class': result[8],
+        'name_practice': result[9],
+        'type_practice': result[10],
+        'number_order': result[11],
+        'order_date': result[12],
+        'code_direction': result[13]
 
-replace_fields(doc, context)
-
-mycursor.execute("SELECT name FROM institute WHERE direction = %s", (result[8],))
-institute_result = mycursor.fetchall()
-if institute_result:
-        institute_class = institute_result[0][0]
-        context = {
-            'institute_name': institute_class
-        }
-
-        # Замена значений в документе doc
-        replace_fields(doc, context)
-
-mycursor.execute("SELECT class FROM groupe WHERE number = %s", (result[1],))
-groupe_result = mycursor.fetchall()
-if groupe_result:
-        groupe_class = groupe_result[0][0]
-        context = {
-            'groupe_class': groupe_class
-            }
-
-        # Замена значений в документе doc
-        replace_fields(doc, context)
-
-# Закрываем курсор
-mycursor.close()
-
-# Получаем новый курсор
-mycursor = mydb.cursor()
+    }
+    
+    replace_fields(doc, context)
+student_fio_value = result[1]
 
 mycursor.execute("SELECT sum_student, plase_practice, city, boss_org, opop, not_st  FROM vse")
 results = mycursor.fetchall()
@@ -102,6 +95,15 @@ for result in results:
 
 replace_fields(doc, context)
 
+
+
+mycursor.execute("SELECT fio FROM student WHERE number_groupe = %s", (student_fio_value,))
+fio_results = mycursor.fetchall()
+    
+for i, fio_result in enumerate(fio_results, start=1):
+    context[f'fio_{i}'] = fio_result[0]
+    
+replace_fields(doc, context)
 mydb.close()
 # Закрываем курсор
 mycursor.close()
