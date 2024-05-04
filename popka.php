@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                 }
             }
-            $sql_practic = "SELECT years,srok,name_practice,number_order,view_practice,type_practice,code_direction,order_date, direction FROM practice WHERE name_practice = '$name_practice'";
+            $sql_practic = "SELECT years,srok,number_order,view_practice,type_practice,code_direction,order_date FROM practice WHERE name_practice = '$name_practice'";
             $result_pactis = $conn->query($sql_practic); 
             if ($result_pactis->num_rows > 0) {
                 // Массив для хранения данных
@@ -71,18 +71,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $type_practice = $row_practic['type_practice']; 
                     $code_direction = $row_practic['code_direction']; 
                     $order_date = $row_practic['order_date']; 
-                    $direction = $row_practic['direction']; 
+                    // $direction = $row_practic['direction']; 
                     
     
-                    $sql_insert_endd = "UPDATE end SET years='$years', srok='$srok', number_order='$number_order', view_practice='$view_practice', type_practice='$type_practice', code_direction='$code_direction', order_date='$order_date', direction='$direction' WHERE student_fio='$fio'";
+                    $sql_insert_endd = "UPDATE end SET years='$years', srok='$srok', number_order='$number_order', view_practice='$view_practice', type_practice='$type_practice', code_direction='$code_direction', order_date='$order_date' WHERE student_fio='$fio'";
                     if ($conn->query($sql_insert_endd) === TRUE) {
                         echo "Данные успешно добавлены в БД";
                     } else {
                         echo "Ошибка: " . $sql_insert_end . "<br>" . $conn->error;
                     }
                 }
+                
 
         } 
+        // Запрос для получения названия направления
+        $sql_direction = "SELECT name FROM direction WHERE groupe = ?";
+        // Подготавливаем SQL выражение для обновления
+        $stmt_update_end = $conn->prepare("UPDATE end SET direction = ? WHERE groupe = ?");
+
+        // Подготавливаем SQL выражение для выборки
+        $stmt_select_direction = $conn->prepare($sql_direction);
+        $stmt_select_direction->bind_param("s", $groupe); // предположим, что $groupe уже имеет значение группы
+        $stmt_select_direction->execute();
+        $result_direction = $stmt_select_direction->get_result();
+
+        if ($result_direction->num_rows > 0) {
+            // Получаем значение названия направления
+            $row_direction = $result_direction->fetch_assoc();
+            $direction_name = $row_direction['name'];
+
+            // Обновляем данные в таблице 'end'
+            $stmt_update_end->bind_param("ss", $direction_name, $groupe);
+            $stmt_update_end->execute();
+            
+            if ($stmt_update_end->affected_rows > 0) {
+                echo "Данные успешно обновлены.";
+            } else {
+                echo "Ошибка при обновлении данных.";
+            }
+        } else {
+            echo "Направление не найдено.";
+        }
         $sql_place = "SELECT address, name_place FROM place_practice WHERE name_practice = '$name_practice'";
             $result_place = $conn->query($sql_place); 
             if ($result_place->num_rows > 0) {
@@ -110,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
                 
         }
-        $sql_i = "SELECT name FROM institute WHERE direction = '$direction'";
+        
+        $sql_i = "SELECT name FROM institute WHERE direction = '$direction_name'";
             $result_i = $conn->query($sql_i); 
             if ($result_i->num_rows > 0) {
                 // Массив для хранения данных
@@ -223,12 +253,53 @@ $conn->close();
 <html>
 <head>
     <title>Форма для ввода ФИО студента</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <form method="post" action="">
-        <label for="fio">ФИО студента:</label><br>
-        <input type="text" id="fio" name="fio"><br><br>
-        <input type="submit" value="Отправить">
-    </form>
+
+
+<form method="post" action="">
+<h2>Форма для ввода ФИО студента</h2>
+    <label for="fio">ФИО студента:</label><br>
+    <input type="text" id="fio" name="fio"><br><br>
+    <input type="submit" value="Отправить">
+</form>
 </body>
 </html>
